@@ -1,6 +1,7 @@
 import { Search, Sun, Moon, Settings, Menu } from "lucide-react";
-import { useAppSelector, useAppDispatch } from "../redux";
 import { setDarkMode, setSidebarCollapsed } from "@/state";
+import { useAppDispatch, useAppSelector } from "@/redux/redux";
+import { RootState } from "@/redux/redux";
 
 export default function Navbar() {
 
@@ -8,7 +9,7 @@ export default function Navbar() {
    const isSidebarCollapsed = useAppSelector(
      (state) => state.global.isSidebarCollapsed,
    );
-   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
+   const isDarkMode = useAppSelector((state: RootState) => state.global.isDarkMode);
 
 
   return (

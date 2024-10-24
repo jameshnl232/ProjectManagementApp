@@ -5,10 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LucideIcon, X } from "lucide-react";
 import { Home, Briefcase, Search, Settings, User, Users } from "lucide-react";
-import { useAppDispatch, useAppSelector } from "../redux";
 import { setSidebarCollapsed } from "@/state";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { AlertCircle, ShieldAlert, AlertTriangle, AlertOctagon, Layers3 } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/redux/redux";
+import { RootState } from "@/redux/redux";
+import { useGetProjectsQuery } from "@/state/api";
 
 
 type Props = {};
@@ -17,10 +19,12 @@ export default function Sidebar({}: Props) {
   const [showProjects, setShowProjects] = useState(true);
   const [showPriorities, setShowPriorities] = useState(true);
   const dispatch = useAppDispatch();
-  const isCollapsed = useAppSelector((state) => state.global.isSidebarCollapsed);
+  const isCollapsed = useAppSelector((state: RootState) => state.global.isSidebarCollapsed);
+
+  const {data: projects} = useGetProjectsQuery();
 
   const sidebarClassNames = ` fixed flex flex-col h-[100vh] justify-between shadow-xl transition-all duration-300 ease-in-out bg-white dark:bg-dark-secondary 
-    overflow-y-auto  ${isCollapsed ? "w-0 hidden" : "w-64"}
+    overflow-y-scroll  ${isCollapsed ? "w-0 hidden" : "w-64"}
     `;
 
   return (
@@ -73,6 +77,9 @@ export default function Sidebar({}: Props) {
         </button>
 
         {/*Projects Lists */}
+        {showProjects && projects && projects.map((project) => (
+          <SidebarLink key={project.id} icon={Briefcase} label={project.name} href={`/projects/${project.id}`} />
+        ))}
 
         {/*Priorities */}
         <button
