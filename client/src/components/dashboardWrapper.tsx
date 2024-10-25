@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
   import { useAppSelector } from "@/redux/redux";
 import { useEffect } from "react";
 import clsx from "clsx";
+import AuthProvider from "@/app/AuthProvider";
 
 
 function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -42,7 +43,9 @@ export default function DashBoardWrapper({
 }) {
   return (
     <StoreProvider>
-      <DashboardLayout>{children}</DashboardLayout>
+      <AuthProvider>
+        <DashboardLayout>{children}</DashboardLayout>
+      </AuthProvider>
     </StoreProvider>
   );
 }
