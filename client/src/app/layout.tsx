@@ -17,6 +17,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Projectee",
   description: "Project management tool",
+  icons: {
+    icon: "/Projectee.png",
+  },
 };
 
 export default function RootLayout({
