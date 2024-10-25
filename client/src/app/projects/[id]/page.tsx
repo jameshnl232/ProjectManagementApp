@@ -4,6 +4,9 @@ import { useState } from 'react'
 import ProjectHeader from '../ProjectHeader';
 import BoardView from '../BoardView';
 import ListView from '../ListView';
+import TimelineView from '../TimelineView';
+import TableView from '../TableView';
+import ModalNewTask from '@/components/ModalNewTask';
 
 type ProjectPageProps = {
   params: {
@@ -20,24 +23,24 @@ export default function ProjectPage({params}: ProjectPageProps) {
 
    return (
      <div>
-       {/* <ModalNewTask
+       <ModalNewTask
          isOpen={isModalNewTaskOpen}
          onClose={() => setIsModalNewTaskOpen(false)}
          id={id}
-       /> */}
+       />
        <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab} />
        {activeTab === "Board" && (
-         <BoardView id={id} setIsModalOpen={setIsModalNewTaskOpen} />
+         <BoardView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
        )}
-        {activeTab === "List" && (
+       {activeTab === "List" && (
          <ListView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
        )}
-{/*        {activeTab === "Timeline" && (
-         <Timeline id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
+       {activeTab === "Timeline" && (
+         <TimelineView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
        )}
        {activeTab === "Table" && (
-         <Table id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
-       )}  */}
+         <TableView id={id} setIsModalNewTaskOpen={setIsModalNewTaskOpen} />
+       )}
      </div>
    );
 }

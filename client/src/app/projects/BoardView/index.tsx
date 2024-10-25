@@ -8,12 +8,12 @@ import TaskColumn from "./TaskColumn";
 
 type BoardViewProps = {
   id: string;
-  setIsModalOpen: (isOpen: boolean) => void;
+  setIsModalNewTaskOpen: (isOpen: boolean) => void;
 };
 
 const taskStatus = ["To Do", "Work In Progress", "Under Review", "Completed"];
 
-export default function BoardView({ id, setIsModalOpen }: BoardViewProps) {
+export default function BoardView({ id, setIsModalNewTaskOpen }: BoardViewProps) {
   const {
     data: tasks,
     isLoading,
@@ -39,7 +39,7 @@ export default function BoardView({ id, setIsModalOpen }: BoardViewProps) {
             status={status}
             moveTask={moveTask}
             tasks={tasks || []}
-            setIsModalNewTaskOpen={setIsModalOpen}
+            setIsModalNewTaskOpen={setIsModalNewTaskOpen}
           />
         ))}
       </div>
