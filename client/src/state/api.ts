@@ -1,11 +1,41 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Project, SearchResults, Task, Team, User } from "./type";
+import { fetchAuthSession, getCurrentUser } from "aws-amplify/auth";
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+    prepareHeaders: async (headers) => {
+      const session = await fetchAuthSession();
+      const { accessToken } = session.tokens ?? {};
+      if (accessToken) {
+        headers.set("Authorization", `Bearer ${accessToken}`);
+      }
+      return headers;
+    },
+  }),
   reducerPath: "api",
   tagTypes: ["Projects", "Tasks", "Users", "Teams"],
   endpoints: (build) => ({
+    getAuthUser: build.query({
+      queryFn: async (_, _queryApi, _extraoptions, fetchWithBQ) => {
+        try {
+          const user = await getCurrentUser();
+          const session = await fetchAuthSession();
+          if (!session) throw new Error("No session found");
+          const { userSub } = session;
+          const { accessToken } = session.tokens ?? {};
+
+          const userDetailsResponse = await fetchWithBQ(`users/${userSub}`);
+          const userDetails = userDetailsResponse.data as User;
+
+          return { data: { user, userSub, userDetails } };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+          return { error: error.message || "Could not fetch user data" };
+        }
+      },
+    }),
     getProjects: build.query<Project[], void>({
       query: () => "/projects",
       providesTags: ["Projects"],
@@ -24,6 +54,13 @@ export const api = createApi({
         result
           ? result.map(({ id }) => ({ type: "Tasks" as const, id }))
           : [{ type: "Tasks" as const }],
+    }),
+    getTasksByUser: build.query<Task[], number>({
+      query: (userId) => `tasks/user/${userId}`,
+      providesTags: (result, error, userId) =>
+        result
+          ? result.map(({ id }) => ({ type: "Tasks", id }))
+          : [{ type: "Tasks", id: userId }],
     }),
     createTask: build.mutation<Task, Partial<Task>>({
       query: (task) => ({
@@ -66,4 +103,6 @@ export const {
   useSearchQuery,
   useGetUsersQuery,
   useGetTeamsQuery,
+  useGetAuthUserQuery,
+  useGetTasksByUserQuery,
 } = api;

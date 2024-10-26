@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
@@ -46,8 +45,8 @@ const formFields = {
 const AuthProvider = ({ children }: any) => {
   return (
     <div>
-      <Authenticator formFields={formFields}>
-        {({ user }: any) =>
+     <Authenticator formFields={formFields}>
+         {({ user }: any) =>
           user ? (
             <div>{children}</div>
           ) : (
@@ -55,8 +54,10 @@ const AuthProvider = ({ children }: any) => {
               <h1>Please sign in below:</h1>
             </div>
           )
-        }
-      </Authenticator>
+        } 
+       
+      </Authenticator> 
+     
     </div>
   );
 };

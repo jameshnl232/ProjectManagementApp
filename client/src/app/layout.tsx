@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import DashboardWrapper from "../components/dashboardWrapper";
+import DashboardWrapper from "@/components/dashboardWrapper";
+  
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   description: "Project management tool",
   icons: {
     icon: "/Projectee.png",
-  },
+  }
 };
 
 export default function RootLayout({
