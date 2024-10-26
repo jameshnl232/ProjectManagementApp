@@ -1,17 +1,17 @@
 "use client";
 
-import { useAppSelector, RootState } from "@/redux/redux";     
 import Header from "@/components/Header";
 import { useGetProjectsQuery } from "@/state/api";
 import { DisplayOption, Gantt, ViewMode } from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
 import React, { useMemo, useState } from "react";
-
-
+import { useAppSelector, RootState } from "@/redux/redux";
 type TaskTypeItems = "task" | "milestone" | "project";
 
 const Timeline = () => {
-  const isDarkMode = useAppSelector((state: RootState) => state.global.isDarkMode);
+  const isDarkMode = useAppSelector(
+    (state: RootState) => state.global.isDarkMode,
+  );
   const { data: projects, isLoading, isError } = useGetProjectsQuery();
 
   const [displayOptions, setDisplayOptions] = useState<DisplayOption>({
@@ -47,10 +47,10 @@ const Timeline = () => {
     return <div>An error occurred while fetching projects</div>;
 
   return (
-    <div className="max-w-full p-8">
-      <header className="mb-4 flex items-center justify-between">
+    <div className="w-full p-4 sm:p-8">
+      <header className="mb-4 flex flex-col sm:flex-row items-center justify-between">
         <Header name="Projects Timeline" />
-        <div className="relative inline-block w-64">
+        <div className="relative w-full sm:w-64 mt-4 sm:mt-0">
           <select
             className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-2 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none dark:border-dark-secondary dark:bg-dark-secondary dark:text-white"
             value={displayOptions.viewMode}
@@ -63,8 +63,8 @@ const Timeline = () => {
         </div>
       </header>
 
-      <div className="overflow-hidden rounded-md bg-white shadow dark:bg-dark-secondary dark:text-white">
-        <div className="timeline">
+      <div className="overflow-x-auto w-full rounded-md bg-white shadow dark:bg-dark-secondary dark:text-white">
+        <div className="timeline max-w-[800px]">
           <Gantt
             tasks={ganttTasks}
             {...displayOptions}
