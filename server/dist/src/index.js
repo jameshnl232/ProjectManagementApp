@@ -24,14 +24,14 @@ app.use((0, morgan_1.default)("common"));
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use((0, cors_1.default)());
-/* ROUTES */
-app.get("/", (req, res) => {
-    res.send("Hello World");
-});
 app.use("/projects", projectRoutes_1.default);
 app.use("/tasks", taskRoutes_1.default);
 app.use("/teams", teamRoutes_1.default);
 app.use("/users", userRoutes_1.default);
+/* ROUTES */
+app.get("/", (req, res) => {
+    res.send("Hello World");
+});
 /* SERVER */
 const port = Number(process.env.PORT) || 3000;
 app.listen(port, "0.0.0.0", () => console.log(`Server running on port: ${port}`));

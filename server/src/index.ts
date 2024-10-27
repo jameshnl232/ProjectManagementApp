@@ -24,15 +24,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-/* ROUTES */
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+
 
 app.use("/projects", projectRoutes);
 app.use("/tasks", taskRoutes);
 app.use("/teams", teamRoutes);
 app.use("/users", userRoutes);
+
+/* ROUTES */
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
 /* SERVER */
 const port = Number(process.env.PORT) || 3000;

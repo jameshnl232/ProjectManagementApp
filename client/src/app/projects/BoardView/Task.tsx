@@ -17,7 +17,6 @@ const Task = ({ task }: TaskProps) => {
     }),
   }));
 
-  console.log("task", task);
 
   const taskTagsSplit = task.tags ? task.tags.split(",") : [];
 

@@ -64,7 +64,7 @@ const Timeline = () => {
       </header>
 
       <div className="overflow-x-auto w-full rounded-md bg-white shadow dark:bg-dark-secondary dark:text-white">
-        <div className="timeline max-w-[800px]">
+        <div className="timeline min-w-screen">
           <Gantt
             tasks={ganttTasks}
             {...displayOptions}

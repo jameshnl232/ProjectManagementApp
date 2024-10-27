@@ -35,19 +35,22 @@ const getTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getTasks = getTasks;
 const getUserTasks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
+    if (!userId) {
+        res.status(400).json({ message: "User ID is required" });
+        return;
+    }
+    const parsedUserId = parseInt(userId);
     try {
         const tasks = yield prismaClient.task.findMany({
             where: {
-                OR: [
-                    { authorUserId: Number(userId) },
-                    { assignedUserId: Number(userId) },
-                ],
+                OR: [{ authorUserId: parsedUserId }, { assignedUserId: parsedUserId }],
             },
             include: {
                 author: true,
                 assignee: true,
             },
         });
+        console.log("Found tasks:", tasks.length); // Debug log
         res.json(tasks);
     }
     catch (error) {
