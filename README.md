@@ -7,6 +7,13 @@
 
 - The application is deployed on AWS, using AWS Cognito for user authentication and Postman for API testing, with AWS CLI for infrastructure management. Gantt charts provide detailed project timelines, integrating well with other dynamic features.
 
+![image](https://github.com/user-attachments/assets/1b2b1bc8-a747-4ba1-93b0-2759823ebcfc)
+
+![image](https://github.com/user-attachments/assets/4c09e3ad-65f4-4941-acd3-d818cc93906f)
+
+![image](https://github.com/user-attachments/assets/fe8de79d-3927-46b7-99b9-88de3ad13688)
+
+
 
 ## AWS Structure diagram
 - ![alt text](/images/image-1.png)
